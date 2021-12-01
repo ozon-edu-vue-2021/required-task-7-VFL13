@@ -10,31 +10,23 @@
 </head>
 <body>
   <div id="container">
-    <div class="list-view">
-      <ul class="contacts-list">
-        <li>
-          <strong>Павел</strong>
-        </li>
+    <div id="person-view" class="list-view selected">
+      <ul id="contacts-list" class="contacts-list">
       </ul>
     </div>
-    <div class="details-view">
-      <div class="back"></div>
+    <div id="friends-View" class="details-view">
+      <div id="back" class="back selected"></div>
+      <div id="title" class="title"></div>
       <div class="background"></div>
-      <div><ul>
-        <li class="people-title">Друзья</li>
-        <li><i class="fa fa-male"></i><span >Иван</span></li>
-        <li><i class="fa fa-male"></i><span >Максим</span></li>
-        <li><i class="fa fa-male"></i><span >Марат</span></li>
-        <li class="people-title">Не в друзьях</li>
-        <li><i class="fa fa-male"></i><span >Вася</span></li>
-        <li><i class="fa fa-male"></i><span >Кирилл</span></li>
-        <li><i class="fa fa-male"></i><span >Степан</span></li>
-        <li class="people-title">Популярные люди</li>
-        <li><i class="fa fa-male"></i><span >Елена</span></li>
-        <li><i class="fa fa-male"></i><span >Оля</span></li>
-        <li><i class="fa fa-male"></i><span >Никита</span></li>
-      </ul></div>
+      <div>
+      <ul>
+          <li id="friends-list" class="people-title">Друзья</li>
+          <li id="random-list" class="people-title">Не в друзьях</li>
+          <li id="popular-list" class="people-title">Популярные люди</li>
+      </ul>
+      </div>
     </div>
   </div>
+  <script type="module" src="/js/app.js"></script>
 </body>
 </html>
