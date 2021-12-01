@@ -12,30 +12,29 @@ const popularList = document.getElementById('popular-list')
 
 
 const getRandom = (min, max, exclude = []) => {
-    min = Math.ceil(min);
-    max = Math.floor(max);
+    min = Math.ceil(min)
+    max = Math.floor(max)
     let random = null
     while (random === null || exclude.includes(random)) {
-        random = Math.floor(Math.random() * (max - min) + min);
+        random = Math.floor(Math.random() * (max - min) + min)
     }
     return random
-};
+}
 
 const createPersonElement = (person, id, isFriend) => {
-    const li = document.createElement('li');
-    const strong = document.createElement('strong');
+    const li = document.createElement('li')
+    const strong = document.createElement('strong')
     strong.innerText = person.name
     if (isFriend) {
-        const i = document.createElement('i');
+        const i = document.createElement('i')
         i.classList.add('fa', 'fa-male')
-        li.appendChild(i);
+        li.appendChild(i)
         li.dataset.remove = "true"
-    }
-    else {
+    } else {
         li.dataset.id = id
         li.dataset.onClick = "detail"
     }
-    li.appendChild(strong);
+    li.appendChild(strong)
     return li
 }
 
@@ -51,8 +50,7 @@ const personFormatter = (persons) => {
         friends.forEach(friend_id => {
             if (personsObj.hasOwnProperty(friend_id)) {
                 personsObj[friend_id].inFriends += 1
-            }
-            else {
+            } else {
                 personsObj[friend_id] = {inFriends: 1}
             }
         })
@@ -64,7 +62,7 @@ const popularPerson = (formattedPerson) => {
     return Object.keys(formattedPerson).sort((personA, personB) =>
         formattedPerson[personB].inFriends - formattedPerson[personA].inFriends ||
         formattedPerson[personA].name.localeCompare(formattedPerson[personB].name)
-    ).slice(0,3)
+    ).slice(0, 3)
 }
 
 const personsFromId = (arr, object) => {
@@ -83,40 +81,35 @@ const renderFriendsList = (element, list) => {
     list.forEach(item => element.after(item))
 }
 
-
-
 const formattedPerson = personFormatter(persons)
 const popular = popularPerson(formattedPerson)
 const popularObjs = personsFromId(popular, formattedPerson)
 renderList(personList, createPersonList(formattedPerson))
 
-
-
-
-document.addEventListener('click',function(e){
-    if(e.target && e.target.dataset.onClick === 'detail'){
+document.addEventListener('click', function (e) {
+    if (e.target && e.target.dataset.onClick === 'detail') {
         const {name, friends} = formattedPerson[e.target.dataset.id]
         const exclude = [...friends, ...popular.map(id => parseInt(id))]
         const randomArr = [...Array(3)].reduce((acc, _) => {
             const randomId = getRandom(1, persons.length, [...exclude, ...acc])
             acc.push(randomId)
             return acc
-        }, []);
+        }, [])
         const randomObjs = personsFromId(randomArr, formattedPerson)
         const friendsObj = personsFromId(friends, formattedPerson)
         renderFriendsList(friendsList, createPersonList(friendsObj, true))
         renderFriendsList(randomList, createPersonList(randomObjs, true))
         renderFriendsList(popularList, createPersonList(popularObjs, true))
-        personView.classList.remove("selected");
-        friendsView.classList.add("selected");
+        personView.classList.remove("selected")
+        friendsView.classList.add("selected")
         detailTitle.innerText = name
     }
-});
+})
 
-backButton.addEventListener('click',function(e){
-  personView.classList.add("selected");
-  friendsView.classList.remove("selected");
-  const elementsToRemove = document.querySelectorAll("[data-remove]")
-  elementsToRemove.forEach(li => li.remove())
-});
+backButton.addEventListener('click', function () {
+    personView.classList.add("selected")
+    friendsView.classList.remove("selected")
+    const elementsToRemove = document.querySelectorAll("[data-remove]")
+    elementsToRemove.forEach(li => li.remove())
+})
 
